@@ -1,0 +1,10 @@
+com\sportzone\user\exception\ErrorResponse.class
+com\sportzone\user\exception\GlobalExceptionHandler.class
+com\sportzone\user\config\DataInitializer.class
+com\sportzone\user\entity\User.class
+com\sportzone\user\config\SecurityConfig.class
+com\sportzone\user\aspect\LoggingAspect.class
+com\sportzone\user\UserServiceApplication.class
+com\sportzone\user\controller\UserController.class
+com\sportzone\user\repository\UserRepository.class
+com\sportzone\user\service\UserService.class
