@@ -9,6 +9,7 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -49,6 +50,9 @@ public class Venue {
 
     @Column(nullable = false)
     private String status = "PENDING"; // APPROVED, PENDING, REJECTED
+
+    @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<VenueImage> images;
 
     @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL)
     private List<Court> courts;
