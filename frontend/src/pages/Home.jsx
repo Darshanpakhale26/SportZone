@@ -1,5 +1,6 @@
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import FeaturedSportCard from '../components/FeaturedSportCard';
 
 const Home = () => {
   return (
@@ -39,39 +40,7 @@ const Home = () => {
             { name: 'Tennis', img: 'https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=500&q=80' },
             { name: 'Cricket', img: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=500&q=80' }
           ].map((sport, idx) => (
-            <Col md={3} key={idx} className="mb-4">
-              <Link to={`/venues?sport=${sport.name}`} style={{ textDecoration: 'none' }}>
-                <Card
-                  className="h-100 text-center py-5 border-0 sport-card position-relative overflow-hidden"
-                  style={{
-                    backgroundImage: `url(${sport.img})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    minHeight: '200px'
-                  }}
-                >
-                  {/* Dark Overlay for readability */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      backgroundColor: 'rgba(0,0,0,0.5)',
-                      transition: 'background-color 0.3s ease'
-                    }}
-                    className="card-overlay"
-                  ></div>
-
-                  <Card.Body className="position-relative d-flex align-items-center justify-content-center">
-                    <h3 className="fw-bold mb-0 text-white text-uppercase" style={{ letterSpacing: '2px', textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
-                      {sport.name}
-                    </h3>
-                  </Card.Body>
-                </Card>
-              </Link>
-            </Col>
+            <FeaturedSportCard key={idx} name={sport.name} img={sport.img} />
           ))}
         </Row>
       </Container>

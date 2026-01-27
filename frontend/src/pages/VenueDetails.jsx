@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Row, Col, Card, Button, Form, Badge, Nav, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Form, Badge, Nav, Alert, Carousel } from 'react-bootstrap';
 import axios from 'axios';
 const VenueDetails = () => {
   const { id } = useParams();
@@ -166,15 +166,24 @@ const VenueDetails = () => {
         {/* Left Side: Venue Info */}
         <Col lg={7} className="mb-4">
           <div className="position-relative mb-4">
-            <img
-              src={venue.imageUrl || "https://via.placeholder.com/800x400"}
-              alt={venue.name}
-              className="img-fluid rounded shadow-sm w-100"
-              style={{ height: '400px', objectFit: 'cover' }}
-            />
-            <Badge bg="primary" className="position-absolute top-0 start-0 m-3 p-2 fs-6">
-              Premium Venue
-            </Badge>
+            {venue && (
+                <Carousel interval={2000} indicators={true} className="rounded shadow-sm overflow-hidden" fade>
+                    {((venue.images && venue.images.length > 0) 
+                        ? venue.images.map(img => img.imageUrl) 
+                        : [venue.imageUrl || "https://via.placeholder.com/800x400?text=SportZone"]
+                    ).map((img, idx) => (
+                        <Carousel.Item key={idx}>
+                            <img
+                              src={img}
+                              alt={`${venue.name} slide ${idx}`}
+                              className="d-block w-100"
+                              style={{ height: '400px', objectFit: 'cover' }}
+                              onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/800x400?text=SportZone"; }}
+                            />
+                        </Carousel.Item>
+                    ))}
+                </Carousel>
+            )}
           </div>
 
           <h1 className="fw-bold" style={{ color: 'var(--text-primary)' }}>{venue.name}</h1>
