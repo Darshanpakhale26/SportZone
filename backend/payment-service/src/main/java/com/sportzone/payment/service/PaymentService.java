@@ -28,7 +28,7 @@ public class PaymentService {
         RazorpayClient razorpay = new RazorpayClient(keyId, keySecret);
 
         JSONObject orderRequest = new JSONObject();
-        orderRequest.put("amount", amount * 100); // amount in the smallest currency unit
+        orderRequest.put("amount", amount * 100);
         orderRequest.put("currency", "INR");
         orderRequest.put("receipt", "txn_" + bookingId);
 
@@ -47,11 +47,11 @@ public class PaymentService {
     public Payment updatePayment(String razorpayOrderId, String paymentId, String signature, String status) {
         Payment payment = paymentRepository.findByRazorpayOrderId(razorpayOrderId)
                 .orElseThrow(() -> new RuntimeException("Payment not found"));
-        
+
         payment.setRazorpayPaymentId(paymentId);
         payment.setRazorpaySignature(signature);
         payment.setStatus(status);
-        
+
         return paymentRepository.save(payment);
     }
 }
