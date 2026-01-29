@@ -34,8 +34,10 @@ const UserBookings = () => {
   };
 
   useEffect(() => {
-    fetchBookings(currentPage);
-  }, [user, currentPage]);
+    if (user && user.id) {
+        fetchBookings(currentPage);
+    }
+  }, [user?.id, currentPage]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages - 1) {

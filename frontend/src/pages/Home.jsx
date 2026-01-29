@@ -23,7 +23,7 @@ const Home = () => {
             <div className="position-relative">
               <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '100%', height: '100%', border: '2px solid var(--accent-neon)', borderRadius: '15px', zIndex: 0 }}></div>
               <img
-                src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=2070&auto=format&fit=crop"
+                src="/images/home_main.jpg"
                 alt="Sports"
                 className="img-fluid rounded-3 shadow-lg position-relative"
                 style={{ zIndex: 1, filter: 'brightness(0.9) contrast(1.1)' }}
@@ -35,10 +35,10 @@ const Home = () => {
         <h2 className="mb-4 fw-bold text-center" style={{ letterSpacing: '2px' }}>FEATURED <span style={{ color: 'var(--accent-neon)' }}>SPORTS</span></h2>
         <Row>
           {[
-            { name: 'Badminton', img: 'https://images.unsplash.com/photo-1721760886982-3c643f05813d?q=80&w=1170&auto=format&fit=crop' },
-            { name: 'Football', img: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=500&q=80' },
-            { name: 'Tennis', img: 'https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=500&q=80' },
-            { name: 'Cricket', img: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=500&q=80' }
+            { name: 'Badminton', img: '/images/badminton.jpg' },
+            { name: 'Football', img: '/images/football.jpg' },
+            { name: 'Tennis', img: '/images/tennis.jpg' },
+            { name: 'Cricket', img: '/images/cricket.jpg' }
           ].map((sport, idx) => (
             <FeaturedSportCard key={idx} name={sport.name} img={sport.img} />
           ))}

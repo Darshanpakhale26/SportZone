@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Container, Form, Button, Card, Overlay, Tooltip, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -22,6 +22,12 @@ const Signup = () => {
   const confirmPasswordRef = useRef(null);
 
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
