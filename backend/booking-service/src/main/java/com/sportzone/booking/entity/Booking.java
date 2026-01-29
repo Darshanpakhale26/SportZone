@@ -15,8 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.FutureOrPresent;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -47,12 +46,10 @@ public class Booking {
 
     @Column(nullable = false)
     @NotNull(message = "Start time is required")
-    @FutureOrPresent(message = "Start time must be in the present or future")
     private LocalDateTime startTime;
 
     @Column(nullable = false)
     @NotNull(message = "End time is required")
-    @Future(message = "End time must be in the future")
     private LocalDateTime endTime;
 
     @Enumerated(EnumType.STRING)
