@@ -35,7 +35,7 @@ public class UserService {
     public User loginUser(String identifier, String password) {
         User user = userRepository.findByUsernameOrEmail(identifier, identifier)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        
+
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
@@ -48,11 +48,11 @@ public class UserService {
 
     public User updateUser(Long id, User userDetails) {
         User user = getUserById(id);
-        
+
         if (userDetails.getName() != null) {
             user.setName(userDetails.getName());
         }
-        
+
         if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
         }
@@ -60,7 +60,7 @@ public class UserService {
         if (userDetails.getRole() != null) {
             user.setRole(userDetails.getRole());
         }
-        
+
         return userRepository.save(user);
     }
 }

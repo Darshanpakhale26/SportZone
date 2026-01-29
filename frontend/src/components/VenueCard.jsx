@@ -28,7 +28,6 @@ const VenueCard = ({ venue }) => {
         <Card.Title className="fw-bold fs-4 mb-1" style={{ color: 'var(--accent-neon)' }}>{venue.name}</Card.Title>
         <Card.Text className="text-secondary mb-3 small"><i className="bi bi-geo-alt me-1"></i>{venue.location}</Card.Text>
 
-        {/* Show available sports as badges */}
         <div className="mb-3">
           {venue.courts && [...new Set(venue.courts.map(c => c.sportType))].map(sport => (
             <Badge key={sport} bg="secondary" className="me-1">{sport}</Badge>

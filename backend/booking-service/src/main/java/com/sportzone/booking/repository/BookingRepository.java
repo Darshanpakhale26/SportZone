@@ -15,21 +15,23 @@ import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
-    List<Booking> findByUserId(Long userId);
+        List<Booking> findByUserId(Long userId);
 
-    Page<Booking> findByUserId(Long userId, Pageable pageable);
+        Page<Booking> findByUserId(Long userId, Pageable pageable);
 
-    @Query("SELECT b FROM Booking b WHERE b.courtId = :courtId " +
-            "AND b.status <> :status " +
-            "AND ((b.startTime < :endTime) AND (b.endTime > :startTime))")
-    List<Booking> findOverlappingBookings(@Param("courtId") Long courtId,
-            @Param("startTime") LocalDateTime startTime,
-            @Param("endTime") LocalDateTime endTime,
-            @Param("status") BookingStatus status);
+        @Query("SELECT b FROM Booking b WHERE b.courtId = :courtId " +
+                        "AND b.status <> :status " +
+                        "AND ((b.startTime < :endTime) AND (b.endTime > :startTime))")
+        List<Booking> findOverlappingBookings(@Param("courtId") Long courtId,
+                        @Param("startTime") LocalDateTime startTime,
+                        @Param("endTime") LocalDateTime endTime,
+                        @Param("status") BookingStatus status);
 
-    List<Booking> findByStatusAndEndTimeBefore(BookingStatus status, LocalDateTime now);
+        List<Booking> findByStatusAndEndTimeBefore(BookingStatus status, LocalDateTime now);
 
-    List<Booking> findByVenueId(Long venueId);
+        List<Booking> findByVenueId(Long venueId);
 
-    List<Booking> findByCourtId(Long courtId);
+        List<Booking> findByCourtId(Long courtId);
+
+        List<Booking> findByStatusAndCreatedAtBefore(BookingStatus status, LocalDateTime dateTime);
 }

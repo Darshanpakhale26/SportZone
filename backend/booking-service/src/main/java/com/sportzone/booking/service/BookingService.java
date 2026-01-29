@@ -55,6 +55,13 @@ public class BookingService {
         return bookingRepository.findByCourtId(courtId);
     }
 
+    public Booking confirmBooking(Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+        booking.setStatus(BookingStatus.CONFIRMED);
+        return bookingRepository.save(booking);
+    }
+
     public Booking cancelBooking(Long bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
@@ -123,14 +130,33 @@ public class BookingService {
         }
     }
 
+    public void deleteBooking(Long bookingId) {
+        if (!bookingRepository.existsById(bookingId)) {
+            throw new RuntimeException("Booking not found");
+        }
+        bookingRepository.deleteById(bookingId);
+    }
+
     @Scheduled(fixedRate = 60000)
     public void updatePastBookings() {
         LocalDateTime now = LocalDateTime.now();
+
+        // 1. Mark CONFIRMED bookings as COMPLETED if time passed
         List<Booking> expiredBookings = bookingRepository.findByStatusAndEndTimeBefore(
                 BookingStatus.CONFIRMED, now);
 
         for (Booking booking : expiredBookings) {
             booking.setStatus(BookingStatus.COMPLETED);
+            bookingRepository.save(booking);
+        }
+
+        // 2. Cancel PENDING bookings older than 10 minutes
+        LocalDateTime tenMinutesAgo = now.minusMinutes(10);
+        List<Booking> staleBookings = bookingRepository.findByStatusAndCreatedAtBefore(
+                BookingStatus.PENDING, tenMinutesAgo);
+
+        for (Booking booking : staleBookings) {
+            booking.setStatus(BookingStatus.CANCELLED);
             bookingRepository.save(booking);
         }
     }

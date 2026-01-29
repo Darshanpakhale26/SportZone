@@ -8,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (localStorage.getItem('user')) {
       navigate('/');
@@ -18,7 +18,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     if (identifier && password) {
       try {
         const response = await axios.post('/api/users/login', { identifier, password });
@@ -28,7 +28,7 @@ const Login = () => {
         setError("Invalid credentials");
       }
     } else {
-        setError('Please fill in all fields');
+      setError('Please fill in all fields');
     }
   };
 
@@ -40,9 +40,9 @@ const Login = () => {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Username or Email</Form.Label>
-            <Form.Control 
-              type="text" 
-              placeholder="Enter username or email" 
+            <Form.Control
+              type="text"
+              placeholder="Enter username or email"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               required
@@ -51,15 +51,15 @@ const Login = () => {
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control 
-              type="password" 
-              placeholder="Password" 
+            <Form.Control
+              type="password"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </Form.Group>
-          
+
           <Button variant="primary" type="submit" className="w-100">
             Login
           </Button>

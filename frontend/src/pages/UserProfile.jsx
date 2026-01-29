@@ -11,13 +11,12 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (user.id) {
-        // Optionally fetch fresh data
-        axios.get(`/api/users/${user.id}`)
-            .then(res => {
-                setUser(res.data);
-                setName(res.data.name || '');
-            })
-            .catch(err => console.error(err));
+      axios.get(`/api/users/${user.id}`)
+        .then(res => {
+          setUser(res.data);
+          setName(res.data.name || '');
+        })
+        .catch(err => console.error(err));
     }
   }, []);
 
@@ -33,12 +32,10 @@ const UserProfile = () => {
       }
 
       const response = await axios.put(`/api/users/${user.id}`, updateData);
-      
-      // Update local storage and state
       const updatedUser = response.data;
       localStorage.setItem('user', JSON.stringify(updatedUser));
       setUser(updatedUser);
-      setPassword(''); // Clear password field
+      setPassword('');
       setMessage('Profile updated successfully!');
     } catch (err) {
       setError('Failed to update profile.');
@@ -51,7 +48,7 @@ const UserProfile = () => {
         <h2 className="text-center mb-4">My Profile</h2>
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
-        
+
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Username</Form.Label>
@@ -67,9 +64,9 @@ const UserProfile = () => {
 
           <Form.Group className="mb-3">
             <Form.Label>Full Name</Form.Label>
-            <Form.Control 
-              type="text" 
-              placeholder="Enter your full name" 
+            <Form.Control
+              type="text"
+              placeholder="Enter your full name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -77,9 +74,9 @@ const UserProfile = () => {
 
           <Form.Group className="mb-3">
             <Form.Label>New Password</Form.Label>
-            <Form.Control 
-              type="password" 
-              placeholder="Leave blank to keep current password" 
+            <Form.Control
+              type="password"
+              placeholder="Leave blank to keep current password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

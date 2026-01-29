@@ -11,7 +11,6 @@ const AdminDashboard = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // Edit Modal State
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [formData, setFormData] = useState({
@@ -44,7 +43,6 @@ const AdminDashboard = () => {
         return isFuture && isNotCancelled;
       });
 
-      // Sort by soonest active booking first
       setBookings(upcomingBookings.sort((a, b) => new Date(a.startTime) - new Date(b.startTime)));
     } catch (err) {
       console.error(err);
@@ -119,22 +117,18 @@ const AdminDashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  // Reset search and page when changing tabs
   useEffect(() => {
     setSearchTerm('');
     setCurrentPage(1);
   }, [activeTab]);
 
-  // Reset page when search term changes
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
 
-  // ... (fetch logic same)
 
   if (loading) return <div className="text-center mt-5 text-light">Loading Admin Dashboard...</div>;
 
-  // Filter Logic
   const filteredUsers = users.filter(u =>
     u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     u.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -157,15 +151,12 @@ const AdminDashboard = () => {
     );
   });
 
-  // Pagination Helper
   const renderPagination = (totalItems) => {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     if (totalPages <= 1) return null;
 
     let items = [];
-    // Show max 5 pages for simple logic, or all if small number. 
-    // For simplicity given the requirement, showing all or a simple slice.
-    // Let's rely on standard mapping.
+
     for (let number = 1; number <= totalPages; number++) {
       items.push(
         <Pagination.Item key={number} active={number === currentPage} onClick={() => setCurrentPage(number)}>
@@ -194,7 +185,6 @@ const AdminDashboard = () => {
 
       {error && <Alert variant="danger">{error}</Alert>}
 
-      {/* 1. Summary Cards (Clickable) */}
       <Row className="mb-5 g-4">
         <Col md={4}>
           <Card
@@ -249,7 +239,6 @@ const AdminDashboard = () => {
         </Col>
       </Row>
 
-      {/* 2. Conditional Details Section */}
       {activeTab === 'USERS' && (
         <div className="mb-5 fade-in">
           <div className="d-flex justify-content-between align-items-center mb-3 border-bottom border-secondary pb-2">
@@ -444,7 +433,6 @@ const AdminDashboard = () => {
         </div>
       )}
 
-      {/* Edit Modal */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton className="border-secondary" style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-primary)' }}>
           <Modal.Title>Edit Booking #{selectedBooking?.id}</Modal.Title>

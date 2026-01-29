@@ -10,11 +10,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "courts")
@@ -28,11 +30,11 @@ public class Court {
     private Long id;
 
     @Column(nullable = false)
-    @jakarta.validation.constraints.NotBlank(message = "Court name is required")
+    @NotBlank(message = "Court name is required")
     private String name;
 
     @Column(nullable = false)
-    @jakarta.validation.constraints.NotBlank(message = "Sport type is required")
+    @NotBlank(message = "Sport type is required")
     private String sportType;
 
     @NotNull(message = "Price is required")
@@ -42,6 +44,7 @@ public class Court {
     @ManyToOne
     @JoinColumn(name = "venue_id")
     @JsonIgnore
+    @ToString.Exclude
     private Venue venue;
 
 }

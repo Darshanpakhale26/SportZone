@@ -16,14 +16,14 @@ const Navigation = () => {
     <Navbar variant={theme} expand="lg" className="shadow-sm sticky-top" style={{ backgroundColor: 'var(--nav-bg)', borderBottom: '1px solid var(--border-color)' }}>
       <Container>
         <Navbar.Brand as={Link} to="/" className="d-flex align-items-center logo-container">
-            <div className="brand-text">
-                <span className="text-sport">SPORT</span><span className="text-zone">ZONE</span>
-            </div>
-            <div className="brand-arrows d-flex ms-2">
-                <div className="arrow arrow-orange"></div>
-                <div className="arrow arrow-white"></div>
-                <div className="arrow arrow-grey"></div>
-            </div>
+          <div className="brand-text">
+            <span className="text-sport">SPORT</span><span className="text-zone">ZONE</span>
+          </div>
+          <div className="brand-arrows d-flex ms-2">
+            <div className="arrow arrow-orange"></div>
+            <div className="arrow arrow-white"></div>
+            <div className="arrow arrow-grey"></div>
+          </div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -53,10 +53,10 @@ const Navigation = () => {
               </>
             )}
             <div className="theme-switch-wrapper ms-3" title={theme === 'light' ? "Switch to Dark Mode" : "Switch to Light Mode"}>
-               <label className="theme-switch" htmlFor="checkbox">
-                    <input type="checkbox" id="checkbox" checked={theme === 'dark'} onChange={toggleTheme} />
-                    <div className="slider round"></div>
-               </label>
+              <label className="theme-switch" htmlFor="checkbox">
+                <input type="checkbox" id="checkbox" checked={theme === 'dark'} onChange={toggleTheme} />
+                <div className="slider round"></div>
+              </label>
             </div>
           </Nav>
         </Navbar.Collapse>

@@ -5,6 +5,7 @@ import com.sportzone.venue.entity.Venue;
 import com.sportzone.venue.repository.CourtRepository;
 import com.sportzone.venue.repository.VenueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +19,9 @@ public class VenueService {
 
     @Autowired
     private CourtRepository courtRepository;
+
+    @Value("${app.booking.ip}")
+    private String serverIp;
 
     public Venue createVenue(Venue venue) {
         venue.setStatus("PENDING");
@@ -46,7 +50,7 @@ public class VenueService {
     public void deleteVenue(Long id) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.put("http://localhost:8083/api/bookings/venue/" + id + "/cancel", null);
+            restTemplate.put("http://" + serverIp + ":8083/api/bookings/venue/" + id + "/cancel", null);
         } catch (Exception e) {
             System.err.println("Failed to cancel bookings for venue " + id + ": " + e.getMessage());
         }
@@ -56,7 +60,7 @@ public class VenueService {
     public void deleteCourt(Long courtId) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.put("http://localhost:8083/api/bookings/court/" + courtId + "/cancel", null);
+            restTemplate.put("http://" + serverIp + ":8083/api/bookings/court/" + courtId + "/cancel", null);
         } catch (Exception e) {
             System.err.println("Failed to cancel bookings for court " + courtId + ": " + e.getMessage());
         }

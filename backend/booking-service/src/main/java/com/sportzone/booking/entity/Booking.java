@@ -61,4 +61,7 @@ public class Booking {
     @Positive(message = "Amount must be positive")
     private Double amount;
 
+    @Column(updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
 }

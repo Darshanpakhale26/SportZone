@@ -15,15 +15,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(error -> 
-            errors.put(error.getField(), error.getDefaultMessage()));
-            
+        ex.getBindingResult().getFieldErrors()
+                .forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+
         ErrorResponse errorResponse = new ErrorResponse(
-            java.time.LocalDateTime.now(),
-            HttpStatus.BAD_REQUEST.value(),
-            "Validation Failed",
-            errors
-        );
+                java.time.LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Validation Failed",
+                errors);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -36,7 +35,7 @@ public class GlobalExceptionHandler {
         if (ex.getMessage().contains("Invalid credentials") || ex.getMessage().contains("User not found")) {
             return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
-        
+
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

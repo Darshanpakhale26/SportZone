@@ -7,8 +7,6 @@ const UserBookings = () => {
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedBookingId, setSelectedBookingId] = useState(null);
-  
-  // Pagination State
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -17,14 +15,11 @@ const UserBookings = () => {
   const fetchBookings = async (page = 0) => {
     if (!user) return;
     try {
-      // Fetch 10 records per page
       const response = await axios.get(`/api/bookings/user/${user.id}?page=${page}&size=10`);
-      
-      // Handle Page object
+
       const content = response.data.content || [];
       setTotalPages(response.data.totalPages);
-      
-      // Sort by date descending (newest first) - Backend does this but ensuring here too
+
       const sortedBookings = content.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
       setBookings(sortedBookings);
     } catch (err) {
@@ -35,7 +30,7 @@ const UserBookings = () => {
 
   useEffect(() => {
     if (user && user.id) {
-        fetchBookings(currentPage);
+      fetchBookings(currentPage);
     }
   }, [user?.id, currentPage]);
 
@@ -52,7 +47,7 @@ const UserBookings = () => {
   };
 
   const initiateCancel = (e, bookingId) => {
-    e.stopPropagation(); // Prevent row clicks or other events
+    e.stopPropagation();
     console.log("Initiating cancel for:", bookingId);
     setSelectedBookingId(bookingId);
     setShowModal(true);
@@ -60,20 +55,17 @@ const UserBookings = () => {
 
   const confirmCancel = async () => {
     if (!selectedBookingId) return;
-    
+
     try {
-        await axios.put(`/api/bookings/${selectedBookingId}/cancel`);
-        // Close modal first
-        setShowModal(false);
-        setSelectedBookingId(null);
-        // Show success message
-        alert('Booking Cancelled Successfully!');
-        // Refresh list
-        fetchBookings(currentPage); 
+      await axios.put(`/api/bookings/${selectedBookingId}/cancel`);
+      setShowModal(false);
+      setSelectedBookingId(null);
+      alert('Booking Cancelled Successfully!');
+      fetchBookings(currentPage);
     } catch (err) {
-        console.error("Cancellation failed:", err);
-        alert('Failed to cancel booking. Please try again.');
-        setShowModal(false);
+      console.error("Cancellation failed:", err);
+      alert('Failed to cancel booking. Please try again.');
+      setShowModal(false);
     }
   };
 
@@ -114,17 +106,17 @@ const UserBookings = () => {
             <td>₹{booking.amount}</td>
             <td>
               <Badge bg={
-                booking.status === 'CONFIRMED' ? 'success' : 
-                booking.status === 'CANCELLED' ? 'danger' : 
-                booking.status === 'COMPLETED' ? 'secondary' : 'warning'
+                booking.status === 'CONFIRMED' ? 'success' :
+                  booking.status === 'CANCELLED' ? 'danger' :
+                    booking.status === 'COMPLETED' ? 'secondary' : 'warning'
               }>
                 {booking.status}
               </Badge>
             </td>
             {showCancel && (
-                <td>
-                    <Button variant="danger" size="sm" onClick={(e) => initiateCancel(e, booking.id)}>Cancel Booking</Button>
-                </td>
+              <td>
+                <Button variant="danger" size="sm" onClick={(e) => initiateCancel(e, booking.id)}>Cancel Booking</Button>
+              </td>
             )}
           </tr>
         ))}
@@ -136,7 +128,7 @@ const UserBookings = () => {
     <Container className="mt-5">
       <h2 className="mb-4">My Bookings</h2>
       {error && <Alert variant="danger">{error}</Alert>}
-      
+
       <Tabs defaultActiveKey="upcoming" id="booking-tabs" className="mb-3">
         <Tab eventKey="upcoming" title={`Upcoming (${upcomingBookings.length})`}>
           {upcomingBookings.length === 0 ? (
@@ -161,30 +153,28 @@ const UserBookings = () => {
         </Tab>
       </Tabs>
 
-      {/* Pagination Controls */}
       {totalPages > 1 && (
         <div className="d-flex justify-content-center align-items-center mt-4 mb-5 gap-3">
-            <Button 
-                variant="outline-primary" 
-                onClick={handlePrevPage} 
-                disabled={currentPage === 0}
-            >
-                &laquo; Previous
-            </Button>
-            <span className="text-muted fw-bold">
-                Page {currentPage + 1} of {totalPages}
-            </span>
-            <Button 
-                variant="outline-primary" 
-                onClick={handleNextPage} 
-                disabled={currentPage >= totalPages - 1}
-            >
-                Next &raquo;
-            </Button>
+          <Button
+            variant="outline-primary"
+            onClick={handlePrevPage}
+            disabled={currentPage === 0}
+          >
+            &laquo; Previous
+          </Button>
+          <span className="text-muted fw-bold">
+            Page {currentPage + 1} of {totalPages}
+          </span>
+          <Button
+            variant="outline-primary"
+            onClick={handleNextPage}
+            disabled={currentPage >= totalPages - 1}
+          >
+            Next &raquo;
+          </Button>
         </div>
       )}
 
-      {/* Cancellation Confirmation Modal */}
       <Modal show={showModal} onHide={handleCloseModal} centered style={{ zIndex: 1055 }}>
         <Modal.Header closeButton className="bg-dark text-white" style={{ borderBottom: '1px solid #333' }}>
           <Modal.Title>Confirm Cancellation</Modal.Title>

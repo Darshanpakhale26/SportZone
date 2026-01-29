@@ -19,7 +19,6 @@ const VenueList = () => {
         setVenues(response.data);
       } catch (err) {
         console.error(err);
-        // Mock fallback deleted for brevity/cleanliness
       } finally {
         setLoading(false);
       }
@@ -28,7 +27,6 @@ const VenueList = () => {
     fetchVenues();
   }, []);
 
-  // Filter venues based on selected sport
   const filteredVenues = selectedSport
     ? venues.filter(venue =>
       venue.courts && venue.courts.some(court =>

@@ -30,7 +30,6 @@ public class PaymentController {
                 paymentDetails.getRazorpayOrderId(),
                 paymentDetails.getRazorpayPaymentId(),
                 paymentDetails.getRazorpaySignature(),
-                paymentDetails.getStatus()
-        ));
+                paymentDetails.getStatus()));
     }
 }

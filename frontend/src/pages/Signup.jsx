@@ -22,7 +22,7 @@ const Signup = () => {
   const confirmPasswordRef = useRef(null);
 
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (localStorage.getItem('user')) {
       navigate('/');
@@ -108,7 +108,6 @@ const Signup = () => {
       <Card style={{ width: '400px' }} className="p-4 shadow">
         <h2 className="text-center mb-4">Sign Up</h2>
 
-        {/* Fallback general error display if needed */}
         {error && <Alert variant="danger">{error}</Alert>}
 
         <Form onSubmit={handleSubmit}>

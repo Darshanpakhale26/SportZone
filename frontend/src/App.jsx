@@ -27,29 +27,29 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/my-bookings" element={<UserBookings />} />
-          <Route 
-            path="/admin" 
+          <Route
+            path="/admin"
             element={
               <ProtectedRoute role="ADMIN">
                 <AdminDashboard />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/owner-dashboard" 
+          <Route
+            path="/owner-dashboard"
             element={
               <ProtectedRoute role="VENUE_OWNER">
                 <VenueOwnerDashboard />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/venue-dashboard/:id" 
+          <Route
+            path="/venue-dashboard/:id"
             element={
               <ProtectedRoute role="VENUE_OWNER">
                 <VenueDashboard />
               </ProtectedRoute>
-            } 
+            }
           />
         </Routes>
       </Router>

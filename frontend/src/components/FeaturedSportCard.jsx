@@ -15,7 +15,7 @@ const FeaturedSportCard = ({ name, img }) => {
             minHeight: '200px'
           }}
         >
-          {/* Dark Overlay for readability */}
+
           <div
             style={{
               position: 'absolute',
