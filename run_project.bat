@@ -6,11 +6,11 @@ pause
 
 echo [1/7] Starting Discovery Server...
 start "Discovery Server" cmd /k java -jar backend/discovery-server/target/discovery-server-0.0.1-SNAPSHOT.jar
-timeout /t 10
+timeout /t 2
 
 echo [2/7] Starting API Gateway...
 start "API Gateway" cmd /k java -jar backend/api-gateway/target/api-gateway-0.0.1-SNAPSHOT.jar
-timeout /t 10
+timeout /t 2
 
 echo [3/7] Starting User Service...
 start "User Service" cmd /k java -jar backend/user-service/target/user-service-0.0.1-SNAPSHOT.jar
